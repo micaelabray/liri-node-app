@@ -29,7 +29,7 @@ inquirer
                     // Text prompt.
                     {
                         type: "input",
-                        message: 'What song would you like to look up?\n',
+                        message: 'Give me a song, please!\n',
                         name: "option"
                     }
                 ])
@@ -40,7 +40,10 @@ inquirer
                     //NPM package: https://www.npmjs.com/package/node-spotify-api
                     var Spotify = require('node-spotify-api');
 
-                    var spotify = new Spotify(keys.spotify);
+                    var spotify = new Spotify ({
+                        id: "38c26c59cbd149c68165747138339e80",
+                        secret: "6b469487668d4f25b06134876b932f0c"
+                    });
 
                     spotify.search({
                             type: 'track',
@@ -65,7 +68,7 @@ inquirer
                     // Text prompt.
                     {
                         type: "input",
-                        message: 'What movie would you like to look up?\n',
+                        message: 'Give me a movie, please!\n',
                         name: "option"
                     }
                 ])
@@ -117,13 +120,13 @@ inquirer
                     // Text prompt.
                     {
                         type: "input",
-                        message: 'What artist/band would you like to look up?\n',
+                        message: 'Give me a band/artist, please!\n',
                         name: "option"
                     }
                 ])
                 .then(function (inquirerResponse) {
                     if (inquirerResponse.option == "") {
-                        inquirerResponse.option = "disturbed";
+                        inquirerResponse.option = "The Jonas Brothers";
                         console.log("Band Name: " + inquirerResponse.option);
                     }
                     var artist = inquirerResponse.option.split(' ').join('+');
@@ -132,12 +135,13 @@ inquirer
                     axios.get(queryUrl)
                         .then(
                             function (response) {
-                                console.log("Venue: " + response.data[0].venue.name);
+                                console.log("Venue: " + response.data.venue.name);
                                 console.log("Venue Location: " + response.data[0].venue.city + ", " + response.data[0].venue.region);
                                 var testDate = response.data[0].datetime;
                                 console.log("Event date: " + moment(testDate).format('MM/DD/YYYY'));
                             })
                 })
+
                 .catch(function (error) {
                     if (error.response) {
                         // Error code information
